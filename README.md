@@ -2,6 +2,15 @@
 
 ### 테스트 코드 연습해보기
 
+### expect와 matcher
+
+- [expect](https://mulder21c.github.io/jest/docs/en/next/expect)<br/>
+  값을 테스트할 때마다 사용한다.<br/>
+  expect 함수 혼자서는 거의 사용하지 않으며 matcher와 함께 사용한다
+
+- [matcher](https://mulder21c.github.io/jest/docs/en/next/using-matchers)<br/>
+  다른 방법으로 값을 테스트 하도록 '매처'를 사용한다
+
 #### 쿼리 함수란?
 
 쿼리는 페이지에서 요소를 찾기 위해 테스트 라이브러리가 제공하는 방법으로,
