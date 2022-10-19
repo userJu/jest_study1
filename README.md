@@ -1,6 +1,10 @@
 ## 테스트의 중요성
 
+<br/>
+
 ### 테스트 코드 연습해보기
+
+<br/>
 
 ### expect와 matcher
 
@@ -11,7 +15,10 @@
 - [matcher](https://mulder21c.github.io/jest/docs/en/next/using-matchers)<br/>
   다른 방법으로 값을 테스트 하도록 '매처'를 사용한다
 
-#### 쿼리 함수란?
+  <br/>
+  <br/>
+
+### 쿼리 함수란?
 
 쿼리는 페이지에서 요소를 찾기 위해 테스트 라이브러리가 제공하는 방법으로,
 
@@ -85,7 +92,12 @@ test("renders learn react link", () => {
 });
 ```
 
+<br/>
+<br/>
+
 ## settings
+
+<br/>
 
 ### ESLint
 
@@ -105,4 +117,45 @@ test("renders learn react link", () => {
   => render로 DOM을 그리는 부분 <br/>
   `npm install eslint-plugin-jest-dom`<br/>
   => expect-matcher테스트 <br/>
-  설치
+  <br/>
+  설치<br/>
+  ` npm install eslint-plugin-testing-library eslint-plugin-jest-dom --save-dev`
+
+<br/>
+
+### 내부 설정
+
+```json
+// .eslintrc.json
+{
+  "plugins": ["testing-library", "jest-dom"],
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "plugin:testing-library/react",
+    // react에 관한 규칙을 정한다
+    "plugin:jest-dom/recommended"
+  ]
+}
+```
+
+- plugins : 플러그인 추가.
+- extends : 플러그인을 추가한 후 규칙을 정해줘야 사용 가능.<br/>
+  따라서 사용하고자 하는 규칙 설정 <br/>
+  recommended는 추천되게 하는 것<br/>
+  규칙을 변경하고자 할 때는 rule 항목을 추가
+
+<br/>
+
+### 확인하기
+
+test 코드에
+
+```javascript
+const lintTest = screen.getByRole("button", {
+  name: "lintTest",
+});
+expect(lintTest.textContent.toBe("lintTest"));
+```
+
+을 작성했을 때 오류가 뜨면 성공(테스팅을 위한 더 좋은 방법을 알려줌)
