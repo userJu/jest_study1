@@ -1,70 +1,77 @@
-# Getting Started with Create React App
+## 테스트의 중요성
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 테스트 코드 연습해보기
 
-## Available Scripts
+#### 쿼리 함수란?
 
-In the project directory, you can run:
+쿼리는 페이지에서 요소를 찾기 위해 테스트 라이브러리가 제공하는 방법으로,
 
-### `npm start`
+- getBy
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+  ```
+  🍒 일치한다면?
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  - 쿼리에 대해 일치하는 노드를 반환
 
-### `npm test`
+  🍏 일치하지 않는다면?
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  - 둘 이상의 요소와 일치하거나 하나도 없을 경우에는 설명 오류를 발생시킨다
 
-### `npm run build`
+  (만약 둘 이상의 요소와 일치해야 할 때는 getAllBy를 사용한다)
+  ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- queryBy
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  ```
+  🍒 일치한다면?
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  - 쿼리에 대해 일치하는 노드를 반환
 
-### `npm run eject`
+  🍏 일치하지 않는다면?
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  - 둘 이상의 요소와 일치한다면 오류 발생
+  - 일치하는 요소가 없다면 null 반환
+    => `Received has value: null`
+  ```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- findBy ( = getBy + waitFor)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+  ```
+  🍒 일치한다면?
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+  - Promise를 반환
 
-## Learn More
+  🍏 일치하지 않는다면?
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  - 하나도 없거나 1000ms 후에 둘 이상의 요소가 발견되면 약속이 거부된다.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  (만약 둘 이상의 요소를 찾아야 할 때는 findAllBy를 사용한다)
+  ```
 
-### Code Splitting
+  - waitFor</br>
+    일정 기간 기다려야 할 때 기대가 통과할 때까지 기다릴 수 있다
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  </br>
+  등 여러 유형의 쿼리가 있다.
 
-### Analyzing the Bundle Size
+  </br>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+만약 요소가 발견되지 않았을 때
 
-### Making a Progressive Web App
+- 쿼리에서 오류 발생
+- Promise를 반환하고 다시 시도
+  하는지 여부에 따라 적절한 쿼리를 선택해야 한다
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```javascript
+import { render, screen } from "@testing-library/react";
+import App from "./App";
 
-### Advanced Configuration
+test("renders learn react link", () => {
+  render(<App />);
+  // DOM에 컴포넌트를 렌더링
+  // 인자로 렌더링할 React 컴포넌트가 들어간다
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  const linkElement = screen.getByText(/learn react/i);
+  expect(linkElement).toBeInTheDocument();
+});
+```
