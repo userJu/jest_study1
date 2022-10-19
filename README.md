@@ -84,3 +84,25 @@ test("renders learn react link", () => {
   expect(linkElement).toBeInTheDocument();
 });
 ```
+
+## settings
+
+### ESLint
+
+- eslint 익스텐션 설치(한번만)
+- .eslintrc.json 파일 생성
+  ```json
+  {
+    "extends": ["react-app", "react-app/jest"]
+  }
+  ```
+  위 내용 package.json에서는 삭제
+  .eslintrc.json 파일에 삽입
+- ESLint Testing Plugins 설치<br/>
+  react / test 등 원하는 사용방법에 맞는 플러그인을 설치<br/>
+  (현재 테스트를 위해서는)<br/>
+  `npm install eslint-plugin-testing-library`<br/>
+  => render로 DOM을 그리는 부분 <br/>
+  `npm install eslint-plugin-jest-dom`<br/>
+  => expect-matcher테스트 <br/>
+  설치
