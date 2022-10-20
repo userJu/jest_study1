@@ -159,3 +159,8 @@ expect(lintTest.textContent.toBe("lintTest"));
 ```
 
 을 작성했을 때 오류가 뜨면 성공(테스팅을 위한 더 좋은 방법을 알려줌)
+
+### Pritter
+
+- 익스텐션으로 설치하거나
+- npm 으로 설치하기
