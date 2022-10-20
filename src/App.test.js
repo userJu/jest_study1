@@ -10,5 +10,5 @@ test("the counter starts at 0", () => {
   const counterElement = screen.getByTestId("counter");
 
   // id가 counter인 엘리먼트의 텍스트가 0인지 테스트
-  expect(counterElement).toBe(0);
+  expect(counterElement).toHaveTextContent(0);
 });
