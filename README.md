@@ -123,7 +123,7 @@ test("renders learn react link", () => {
 
 <br/>
 
-### 내부 설정
+#### 내부 설정
 
 ```json
 // .eslintrc.json
@@ -147,7 +147,7 @@ test("renders learn react link", () => {
 
 <br/>
 
-### 확인하기
+#### 확인하기
 
 test 코드에
 
