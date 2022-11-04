@@ -1,9 +1,9 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 
 function App() {
   const [counter, setCounter] = useState(0);
+  const [disabled, setDisabled] = useState(false);
 
   return (
     <div className="App">
@@ -15,6 +15,7 @@ function App() {
             onClick={() => {
               setCounter((count) => count - 1);
             }}
+            disabled={disabled}
           >
             -
           </button>
@@ -23,6 +24,7 @@ function App() {
             onClick={() => {
               setCounter((count) => count + 1);
             }}
+            disabled={disabled}
           >
             +
           </button>
@@ -31,6 +33,9 @@ function App() {
           <button
             data-testid="on/off-button"
             style={{ backgroundColor: "blue" }}
+            onClick={() => {
+              setDisabled((prev) => !prev);
+            }}
           >
             on/off
           </button>
