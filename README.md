@@ -183,3 +183,23 @@ expect(lintTest.textContent.toBe("lintTest"));
 1. 많은 기능을 테스트하기 때문에 코드에 안정감이 부여
 2. 개발하면서 많은 시간이 소요되는 디버깅 시간이 줄어들고 실제 개발 시간도 줄어든다
 3. 소스 코드 하나하나를 신중하게 작성하기 때문에 좋은 코드를 작성할 수 있다
+
+<br/>
+<br/>
+<br/>
+
+## 테스트 작성하기
+
+### FireEvent API
+
+유저가 발생시키는 액션(이벤트)에 대한 테스트를 해야 하는 경우에 사용
+
+```javascript
+test("When the + button is pressed, the counter changes to 1", () => {
+  render(<App />);
+  const buttonElement = screen.getByTestId("plus-button");
+  fireEvent.click(buttonElement);
+  const counterElement = screen.getByTestId("counter");
+  expect(counterElement).toHaveTextContent(1);
+});
+```
