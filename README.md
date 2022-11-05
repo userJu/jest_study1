@@ -1,8 +1,8 @@
-## 테스트의 중요성
+# 테스트
 
 <br/>
 
-### 테스트 코드 연습해보기
+## 테스트 코드 연습해보기
 
 <br/>
 
@@ -18,7 +18,7 @@
   <br/>
   <br/>
 
-### 쿼리 함수란?
+## 쿼리 함수란?
 
 쿼리는 페이지에서 요소를 찾기 위해 테스트 라이브러리가 제공하는 방법으로,
 
@@ -123,7 +123,7 @@ test("renders learn react link", () => {
 
 <br/>
 
-#### 내부 설정
+### 내부 설정
 
 ```json
 // .eslintrc.json
@@ -147,7 +147,7 @@ test("renders learn react link", () => {
 
 <br/>
 
-#### 확인하기
+### 확인하기
 
 test 코드에
 
@@ -190,6 +190,8 @@ expect(lintTest.textContent.toBe("lintTest"));
 
 ## 테스트 작성하기
 
+<br/>
+
 ### FireEvent API
 
 유저가 발생시키는 액션(이벤트)에 대한 테스트를 해야 하는 경우에 사용
@@ -203,3 +205,41 @@ test("When the + button is pressed, the counter changes to 1", () => {
   expect(counterElement).toHaveTextContent(1);
 });
 ```
+
+<br/>
+<br/>
+
+## Query 사용 우선 순위
+
+<br/>
+
+> 현재가지는 `getByTestId` 쿼리를 이용해서 엘레먼트에 접근.
+> 테스트를 진행했다
+> 하지만 testing library에서 추천하는 쿼리 사용 우선 순위가 따로 있다!!
+
+<br/>
+
+1. 모든 사람에게 접근 가능한 코드를 사용해야 한다<br/>
+   - 보조 기기를 사용하는 유저의 경험을 반영해야 한다
+     <br/>
+     `getByTestId`대신 `getByRole`을 이용하는 것이 좋다
+     <br/>
+     `getByRole('button', {name:/subnit/i})`
+     i는 대소문자를 구분하지 않겠다는 표시
+     <br/>
+   - `getByLabelText`은 label이 있는 input의 label 내용으로 input을 선택한다
+   - `getByPlaceholderText`은 placeholder값으로 input과 textarea를 선택한다
+   - `getByText`는 element가 가지고 있는 text값으로 DOM을 선택한다
+
+<br/>
+
+2. Semantic Queries<br/>
+   - element가 alt를 지원한다면 `getByAltText`를 이용하는 것이 좋다
+     <br/>
+   - title 속성을 가지고 있는 DOM이나 title element를 가지고 있는 SVG를 선택한다면 `getByTitle`을 사용하는 것이 좋다
+
+<br/>
+
+3. Test IDs<br/>
+
+- 어떠한 경우에도 사용할 수 없을 때 `getByTestId`
