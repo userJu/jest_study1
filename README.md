@@ -209,6 +209,30 @@ test("When the + button is pressed, the counter changes to 1", () => {
 <br/>
 <br/>
 
+## userEvent API
+
+전에 FireEvent Api를 사용해서 이벤트 테스트를 처리해줬다.<br/>
+그러나 사실 FireEvent를 사용하는 것 보다 userEvent를 사용해서 이벤트를 테스트하는 것이 더 좋은 방법이라고 한다!<br/>
+<br/>
+
+### fireEvent vs userEvent
+
+fireEvent를 사용해서 만들어졌다.<br/>
+userEvent의 내부 코드를 보면 fireElement를 사용한다.<br/>
+그런데 element의 타입에 따라서 더 적절한 반응을 보여준다<br/>
+
+- label을 클릭했을 때
+- checkbox를 클릭했을 때
+- radio를 클릭했을 때
+
+userEvent는 이 타입에 따라서 다 다른 반응을 해준다
+<br/>
+fireEvent로 버튼을 클릭하면 fireEvent.click(button)버튼이 focus되지 않는다.<br/>
+하지만 userEvent로 클릭하면
+userEvent.click(button) 버튼이 focus된다.<br/>
+
+따라서 실제 사용하는 유저가 보기에 실제 버튼을 클릭하는 행위가 더 잘 표현되기에 'userEvent'를 사용하는 것을 더 추천!
+
 ## Query 사용 우선 순위
 
 <br/>
