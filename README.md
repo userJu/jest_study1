@@ -304,3 +304,76 @@ userEvent.click(button) 버튼이 focus된다.<br/>
 ### 노드와 통합(Jest 사용하는 테스트 환경)
 
 - MSW가 서버를 생성해서 생성된 서버로 요청을 보내고 응답을 받는 방법
+
+### 사용하기
+
+1. src/mocks폴더에
+   handlers.js를 만들어 handler들을 넣어준다 <br/>
+   => 우리는 handler을 이용해서 생성된 서버로 요청을 보내고 응답을 받는 (jest로 테스트를 할 수 있는)방법을 사용할 것이기 때문에!
+
+   ```
+   import { rest } from "msw";
+
+    export const handlers = [
+      rest.get("http://localhost:5000/products", (req, res, ctx) => {
+        return res(
+          ctx.json([
+            {
+              name: "America",
+              imagePath: "/images/america.jpeg",
+            },
+            {
+              name: "England",
+              imagePath: "/images/england.jpeg",
+            },
+          ])
+        );
+      }),
+
+      rest.get("http://localhost:5000/options", (req, res, ctx) => {
+        return res(
+          ctx.json([
+            {
+              name: "Insurance",
+            },
+            {
+              name: "Dinner",
+            },
+          ])
+        );
+      }),
+    ];
+
+   ```
+
+2. server을 만들어야 한다. src/mocks 폴더에 server.js를 만들어주고 서버를 생성해준다
+
+```
+import { setupServer } from "msw/node";
+import { handlers } from "./handlers";
+
+// mocking server 생성
+export const server = setupServer(...handlers);
+
+```
+
+3. setupTest.js에서 server을 import해준다
+
+```
+**import 후 파일 모습**
+
+// jest-dom adds custom jest matchers for asserting on DOM nodes.
+// allows you to do things like:
+// expect(element).toHaveTextContent(/react/i)
+// learn more: https://github.com/testing-library/jest-dom
+import "@testing-library/jest-dom";
+
+import { server } from "./mocks/server";
+
+beforeAll(() => server.listen());
+
+afterEach(() => server.resetHandlers());
+
+afterAll(() => server.close());
+
+```
