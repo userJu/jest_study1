@@ -392,3 +392,9 @@ test("display product images from server", async () => {
   expect(productImages).toHaveLength(2);
 });
 ```
+
+<br/>
+<br/>
+<br/>
+
+## 서버에서 데이터를 가져올 때 에러 발생 시 처리하기!

@@ -1,6 +1,7 @@
 import "./App.css";
 import { useState } from "react";
 import SummaryPage from "./pages/SummaryPage/SummaryPage";
+import OrderPage from "./pages/OrderPage/OrderPage";
 
 function App() {
   const [counter, setCounter] = useState(0);
@@ -8,6 +9,7 @@ function App() {
 
   return (
     <div className="App">
+      <OrderPage />
       {/* <header className="App-header">
         <h3 data-testid="counter">{counter}</h3>
         <div>
@@ -42,7 +44,7 @@ function App() {
           </button>
         </div>
       </header> */}
-      <SummaryPage />
+      {/* <SummaryPage /> */}
     </div>
   );
 }
