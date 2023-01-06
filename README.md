@@ -398,3 +398,32 @@ test("display product images from server", async () => {
 <br/>
 
 ## 서버에서 데이터를 가져올 때 에러 발생 시 처리하기!
+
+```
+test("when fetching product datas, face an error", async () => {
+  server.resetHandlers(
+    rest.get("http://localhost:5000/products", (req, res, ctx) => {
+      return res(ctx.status(500));
+    })
+  );
+
+  render(<Type orderType="products" />);
+
+  const errorBanner = await screen.findByTestId("error-banner");
+  expect(errorBanner).toHaveTextContent("에러가 발생했습니다.");
+});
+```
+
+<br/>
+<br/>
+<br/>
+
+## + React에서 데이터 흐름을 컨트롤 하는 법(state 관리하기)
+
+1. state와 props를 사용
+2. React Context 사용
+3. mobx
+4. redux
+5. recoil....
+
+### context를 사용해서 컴포넌트에 데이터 제공하기
