@@ -427,3 +427,46 @@ test("when fetching product datas, face an error", async () => {
 5. recoil....
 
 ### context를 사용해서 컴포넌트에 데이터 제공하기
+
+#### context를 이용할 때 마주칠 수 있는 에러
+
+```
+  ● update product's total when products change
+
+    TypeError: undefined is not iterable (cannot read property Symbol(Symbol.iterator))
+
+       9 |   const [items, setItmes] = useState([]);
+      10 |   const [error, setError] = useState(false);
+    > 11 |   const [orderDatas, updateItemCount] = useContext(OrderContextProvider);
+         |                                         ^
+      12 |   useEffect(() => {
+      13 |     loadItems(orderType);
+      14 |   }, [orderType]);
+```
+
+**에러 발생 이유**
+실제 코드는 OrderContextProvider로 감싸주었지만, 테스트 부분에서는 아직 감싸주지 않았기 때문에 Context를 사용할 때 에러가 발생한다.
+
+따라서 실제 코드처럼 테스트 부분도 wrapper로 감싸주면 된다.
+
+```
+test("update product's total when products change", async () => {
+  render(<Type orderType="products" />, { wrapper: OrderContextProvider }); // 🌟 여기!
+
+  const productsTotal = screen.getByText("상품 총 가격:", { exact: false });
+  // exact : false => 상품 총 가격: 뒤에 다른 것이 나와도 getByText로 잡아낼 수 있다
+  expect(productsTotal).toHaveTextContent("0");
+
+  // america 여행 상품 한 개 올리기
+  const americaInput = await screen.findByRole("spinbutton", {
+    name: "America",
+  });
+  // getByRole이 아니라 findByRole인 이유
+  // 이 부분도 결국에는 서버에서 여행 상품에 대한 여행 상품을 가지고 온 다음이라.
+  // findByRole을 쓸 때 async await을 쓰면 된다
+
+  userEvent.clear(americaInput);
+  userEvent.type(americaInput, "1");
+  expect(productsTotal).toHaveTextContent("1000");
+});
+```

@@ -1,6 +1,6 @@
 import { createContext, useEffect, useMemo, useState } from "react";
 
-const OrderContext = createContext();
+export const OrderContext = createContext();
 
 const pricePerItem = {
   products: 1000,
@@ -9,7 +9,7 @@ const pricePerItem = {
 
 const calculateSubtotal = (orderType, orderCounts) => {
   let optionCount = 0;
-  for (const count of orderCounts[orderType].valuees()) {
+  for (const count of orderCounts[orderType].values()) {
     optionCount += count;
   }
   return optionCount * pricePerItem[orderType];

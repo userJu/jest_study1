@@ -1,11 +1,12 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { OrderContextProvider } from "../../../contexts/OrderContext";
 import Type from "../Type";
 
 test("update product's total when products change", async () => {
-  render(<Type orderType="products" />);
+  render(<Type orderType="products" />, { wrapper: OrderContextProvider });
 
-  const productsTotal = screen.getByText("상품 총 가격:", { exact: false });
+  const productsTotal = screen.getByText("총 가격:", { exact: false });
   // exact : false => 상품 총 가격: 뒤에 다른 것이 나와도 getByText로 잡아낼 수 있다
   expect(productsTotal).toHaveTextContent("0");
 
